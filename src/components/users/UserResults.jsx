@@ -1,6 +1,10 @@
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 
 function UserResults() {
+    //Instantiate state to hold the fetched data
+    const [users, setUsers] = useState([])
+    //Instantiate state to show a loader while fetching data
+    const [isLoading, setIsLoading] = useState(true)
 
     const fetchUsers = async () => {
         const res = await fetch(`${process.env.REACT_APP_GITHUB_URL}/users`, {
@@ -10,18 +14,29 @@ function UserResults() {
         })
 
         const data = await res.json()
-        console.log(data)
+        setUsers(data)
+        setIsLoading(false)
     }
 
+    // run the fetchUsers function to get the data once the page is loaded
     useEffect(() => {
         fetchUsers()
     }, [])
 
-    return (
-        <div>
-            user results
-        </div>
-    )
+    if (!isLoading) {
+        return (
+            <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
+                {users.map((user) => {
+                    return (
+                        <h3 key={user.id}>{user.login}</h3>
+                    )
+                })}
+            </div>
+        )
+    } else {
+        return <h3>Loading...</h3>
+    }
+
 }
 
 export default UserResults
