@@ -9,7 +9,7 @@ function App() {
       <div className="flex flex-col justify-between h-screen">
         <Navbar />
 
-        <main>
+        <main className='container mx-auto px-2 pb-12'>
           Content here
         </main>
         <Footer />
