@@ -21,6 +21,7 @@ export const GithubProvider = ({ children }) => {
         dispatch({ type: 'SET_LOADING' })
     }
 
+    //Get initial users for testing purposes
     const fetchUsers = async () => {
         setLoading()
 
