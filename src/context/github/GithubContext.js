@@ -22,20 +22,24 @@ export const GithubProvider = ({ children }) => {
     }
 
     //Get initial users for testing purposes
-    const fetchUsers = async () => {
+    const fetchUsers = async (searchText) => {
         setLoading()
 
-        const res = await fetch(`${GITHUB_URL}/users`, {
+        const params = new URLSearchParams({
+            q: searchText
+        })
+
+        const res = await fetch(`${GITHUB_URL}/search/users?${params}`, {
             headers: {
                 // Authorization: `token ${GITHUB_TOKEN}`
             }
         })
 
-        const data = await res.json()
+        const { items } = await res.json()
 
         dispatch({
             type: 'GET_USERS',
-            payload: data
+            payload: items
         })
     }
 
