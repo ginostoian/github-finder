@@ -11,12 +11,19 @@ export const GithubProvider = ({ children }) => {
     //Instantiate state to hold the fetched data
     const initialState = {
         users: [],
-        isLoading: true
+        isLoading: false
     }
 
     const [state, dispatch] = useReducer(githubReducer, initialState)
 
+    // helper function to set the loading status using the reducer
+    const setLoading = () => {
+        dispatch({ type: 'SET_LOADING' })
+    }
+
     const fetchUsers = async () => {
+        setLoading()
+
         const res = await fetch(`${GITHUB_URL}/users`, {
             headers: {
                 // Authorization: `token ${GITHUB_TOKEN}`
